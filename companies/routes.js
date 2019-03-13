@@ -5,13 +5,19 @@ const router = new Router()
 
 router.get('/companies', (req, res, next) => {
     Company
-        .findAll()
-        .then(companies => {
-            res.send({ companies })
+        .count()
+        .then(total => {
+            Company
+                .findAll({
+                    limit, offset
+                })
+                .then(companies => {
+                    res.send({ companies, total })
+                })
+                .catch(error => next(error))
         })
         .catch(error => next(error))
 })
-
 router.get('/companies/:id', (req, res, next) => {
     Company
         .findById(req.params.id)
