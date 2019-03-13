@@ -4,6 +4,9 @@ const Company = require('./model')
 const router = new Router()
 
 router.get('/companies', (req, res, next) => {
+    const limit = req.query.limit || 25
+    const offset = req.query.offset || 0
+    
     Company
         .count()
         .then(total => {
